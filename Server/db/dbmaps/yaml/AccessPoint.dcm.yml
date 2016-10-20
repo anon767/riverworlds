@@ -1,0 +1,32 @@
+AccessPoint:
+    type: entity
+    table: accessPoint
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+     fromMap:
+      targetEntity: Map
+      joinColumn:
+        name: mapfrom_id
+        referencedColumnName: id
+     toMap:
+      targetEntity: Map
+      joinColumn:
+        name: mapto_id
+        referencedColumnName: id
+        
+        
+    fields:
+        x:
+            type: integer
+            nullable: false
+            length: 65535
+        y:
+            type: integer
+            nullable: false
+            length: 65535
+            

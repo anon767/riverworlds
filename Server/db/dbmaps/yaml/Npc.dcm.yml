@@ -1,0 +1,39 @@
+Npc:
+    type: entity
+    table: npc
+    id:
+           id:
+             type: integer
+             id: true
+             generator:
+                 strategy: AUTO
+    manyToOne:
+     map:
+      targetEntity: Map
+      inversedBy: npcs
+      joinColumn:
+        name: map_id
+        referencedColumnName: id
+          
+          
+    fields:
+        name:
+            type: text
+            nullable: false
+            length: 65535
+        speech:
+            type: text
+            nullable: false
+            length: 65535
+        x:
+            type: integer
+            nullable: true
+            length: 65535
+        y:
+            type: integer
+            nullable: true
+            length: 65535  
+        sprite:
+            type: text
+            nullable: true
+            length: 65535  

@@ -1,0 +1,51 @@
+Map:
+    type: entity
+    table: map
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToMany:
+        tiles:
+            targetEntity: Tile
+            inversedBy: maps
+            joinTable:
+              name: maps_tiles
+              joinColumns:
+                map_id:
+                  referencedColumnName: id
+              inverseJoinColumns:
+                tile_id:
+                  referencedColumnName: id
+            
+    oneToMany:
+        players:
+              targetEntity: Player
+              mappedBy: map
+        npcs:
+              targetEntity: Npc
+              mappedBy: map
+              
+    fields:
+        startX:
+            type: integer
+            nullable: false
+            length: 65535
+        startY:
+            type: integer
+            nullable: false
+            length: 65535
+        width:
+            type: integer
+            nullable: false
+            length: 65535
+        height:
+            type: integer
+            nullable: false
+            length: 65535            
+        name:
+            type: text
+            nullable: false
+            length: 65535

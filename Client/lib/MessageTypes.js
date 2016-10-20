@@ -1,0 +1,21 @@
+var MessageTypes = {
+    LOGIN: 0,
+    REGISTER: 1,
+    MOVE: 2,
+    MAP: 3,
+    INITIAL: 4,
+    ADDTILE: 5,
+    DELTILE: 6,
+    REQUESTMAPCHANGE: 7,
+    GETMAPID: 8,
+    GETCONID: 9,
+    PLAYER: 10,
+    REQUESTREFRESH: 11,
+    KICK: 12,
+    LEFT: 13,
+    UPDATETILE: 14,
+    CHANGEMAP: 15,
+    REFRESHMAP: 16,
+    MESSAGE: 17,
+    TALK: 18
+};

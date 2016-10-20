@@ -1,0 +1,40 @@
+Tile:
+  type: entity
+  table: tile
+  id:
+     id:
+         type: integer
+         id: true
+         generator:
+             strategy: AUTO
+             
+  manyToMany:
+     maps:
+        targetEntity: Map
+        mappedBy: tiles
+
+  fields:
+      walkable:
+          type: boolean
+          nullable: false
+          length: 65535
+      sprite:
+          type: text
+          nullable: false
+          length: 65535  
+      frame:
+          type: integer
+          nullable: false
+          length: 65535  
+      x:
+          type: integer
+          nullable: false
+          length: 65535  
+      y:
+          type: integer
+          nullable: false
+          length: 65535  
+      layer:
+          type: integer
+          nullable: false
+          length: 65535  

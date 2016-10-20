@@ -1,0 +1,81 @@
+Player:
+    type: entity
+    table: player
+    id:
+           id:
+             type: integer
+             id: true
+             generator:
+                 strategy: AUTO
+    manyToOne:
+     map:
+      targetEntity: Map
+      inversedBy: players
+      joinColumn:
+        name: map_id
+        referencedColumnName: id
+    manyToMany:
+        items:
+            targetEntity: Item
+            inversedBy: players
+            joinTable:
+              name: players_items
+              joinColumns:
+                player_id:
+                  referencedColumnName: id
+              inverseJoinColumns:
+                item_id:
+                  referencedColumnName: id
+          
+    fields:
+        name:
+            type: text
+            nullable: false
+            length: 65535
+        sprite:
+            type: text
+            nullable: false
+            length: 65535
+        pwd:
+            type: text
+            nullable: false
+            length: 65535
+        hp:
+            type: integer
+            nullable: false
+            length: 65535
+        email:
+            type: text
+            nullable: false
+            length: 65535
+        x:
+            type: integer
+            nullable: true
+            length: 65535
+        y:
+            type: integer
+            nullable: true
+            length: 65535  
+        conId:
+            type: integer
+            nullable: true
+            length: 65535  
+        online:
+            type: integer
+            nullable: true
+            length: 65535
+        gameMaster:
+            type: boolean
+            nullable: true
+        level:
+            type: integer
+            nullable: true
+        experience:
+            type: integer
+            nullable: true
+        ip:
+            type: text
+            nullable: true
+        lastJoin:
+            type: integer
+            nullable: true

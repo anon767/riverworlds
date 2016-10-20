@@ -1,0 +1,32 @@
+Item:
+  type: entity
+  table: item
+  id:
+     id:
+         type: integer
+         id: true
+         generator:
+             strategy: AUTO
+             
+  manyToMany:
+     players:
+        targetEntity: Player
+        mappedBy: items
+
+  fields:
+      name:
+          type: text
+          nullable: false
+          length: 65535  
+      sprite:
+          type: text
+          nullable: false
+          length: 65535  
+      damage:
+          type: integer
+          nullable: true
+          length: 65535  
+      armor:
+          type: integer
+          nullable: true
+          length: 65535  
