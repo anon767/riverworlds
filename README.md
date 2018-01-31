@@ -2,8 +2,11 @@
 
 A simple MMORPG programmed in PHP (server-side) and JavaScript (client-side)
 
-##quick demo
+## quick demo
 
+![game screen](https://raw.githubusercontent.com/anon767/riverworlds/master/riverworlds1.gif "game screen")
+
+![editor](https://raw.githubusercontent.com/anon767/riverworlds/master/riverworlds2.gif "EDITOR")
 
 
 ## Dependencies
