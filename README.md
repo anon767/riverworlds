@@ -2,7 +2,7 @@
 
 A simple MMORPG programmed in PHP (server-side) and JavaScript (client-side)
 
-## quick demo
+## Quick demo
 
 ![game screen](https://raw.githubusercontent.com/anon767/riverworlds/master/riverworlds1.gif "game screen")
 
@@ -12,6 +12,10 @@ A simple MMORPG programmed in PHP (server-side) and JavaScript (client-side)
 ## Dependencies
 1. Mysql Server
 2. PHP
+## What
+
+I programmed this small game for educational purposes some years ago. Basically an extensible multiplayer browsergame.
+The client and server communicate over Websockets.
 
 ## usage
 
