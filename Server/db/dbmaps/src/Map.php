@@ -203,7 +203,7 @@ class Map
      * @param \AccesPoinr $accesPoints
      * @return Map
      */
-    public function addAccesPoint(\AccesPoinr $accesPoints)
+    public function addAccesPoint(\AccessPoint $accesPoints)
     {
         $this->accesPoints[] = $accesPoints;
 
@@ -215,7 +215,7 @@ class Map
      *
      * @param \AccesPoinr $accesPoints
      */
-    public function removeAccesPoint(\AccesPoinr $accesPoints)
+    public function removeAccesPoint(\AccessPoint $accesPoints)
     {
         $this->accesPoints->removeElement($accesPoints);
     }

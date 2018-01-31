@@ -1,31 +1,37 @@
 <?php
 
-class World {
+class World
+{
 
     var $server, $maps = array(), $players = array(), $em, $connections = 0, $npcs = 0, $items;
 
     /**
      * Help Functions
-     * 
-     * 
+     *
+     *
      */
-    public function getPlayerByClientId($clientID) {
+    public function getPlayerByClientId($clientID)
+    {
         return isset($this->players[$clientID]) ? $this->players[$clientID] : NULL;
     }
 
-    public function getServer() {
+    public function getServer()
+    {
         return $this->server;
     }
 
-    public function log($msg) {
+    public function log($msg)
+    {
         $this->getServer()->log($msg);
     }
 
-    public function getMapById($id) {
+    public function getMapById($id)
+    {
         return $this->maps[$id];
     }
 
-    public function getDatabaseManager() {
+    public function getDatabaseManager()
+    {
         // added reconnect for mysql
         if ($this->em->getConnection()->ping() === false) {
             $this->em->getConnection()->close();
@@ -34,7 +40,8 @@ class World {
         return $this->em;
     }
 
-    public function __construct($server, $em) {
+    public function __construct($server, $em)
+    {
         $this->em = $em;
         $this->server = $server;
         $this->buildMap();
@@ -47,14 +54,16 @@ class World {
      * 
      */
 
-    public function loadItems() {
+    public function loadItems()
+    {
         $items = $this->getDatabaseManager()->getRepository("Item")->findAll();
         foreach ($items as $item) {
             $items[] = new GameItem($this, $item->getId());
         }
     }
 
-    public function resetPlayer() {
+    public function resetPlayer()
+    {
         $players = $this->em->getRepository("Player")->findAll();
         $this->log(count($players) . " player has been reseted");
         foreach ($players as $player) {
@@ -65,8 +74,26 @@ class World {
         }
     }
 
-    public function buildMap() {
+    public function createMapEntry()
+    {
+        $dbMaps = $this->em->getRepository("Map")->findAll();
+        if (count($dbMaps) > 0)
+            return;
+        $this->log("no map configured. Ill create one");
+        $map = new Map();
+        $map->setStartX(10);
+        $map->setStartY(10);
+        $map->setHeight(15);
+        $map->setWidth(40);
+        $map->setName("World 1");
+        $this->em->persist($map);
+        $this->em->flush();
+    }
+
+    public function buildMap()
+    {
         $this->maps = array();
+        $this->createMapEntry();
         $dbMaps = $this->em->getRepository("Map")->findAll();
         foreach ($dbMaps as $map) {
             $this->maps[$map->getId()] = new GameMap($map->getId(), $this);
@@ -83,20 +110,23 @@ class World {
 
     /**
      * Handler
-     * 
+     *
      */
-    public function onConnect($clientID) {
+    public function onConnect($clientID)
+    {
         $this->connections++;
     }
 
-    public function onJoin($clientID, $id, $name) {
+    public function onJoin($clientID, $id, $name)
+    {
         $this->players[$clientID] = new GamePlayer($clientID, $this, $name, $id);
         $this->getMapById($this->getPlayerByClientId($clientID)->getMap()->getId())->propagateMap($this->getPlayerByClientId($clientID));
         $this->log("($clientID) ($name) on map " . $this->getPlayerByClientId($clientID)->getMap()->getId() . " joined");
         $this->getMapById($this->getPlayerByClientId($clientID)->getMap()->getId())->propagateNpcs($this->players[$clientID]);
     }
 
-    public function onClose($clientID) {
+    public function onClose($clientID)
+    {
         $p = $this->getPlayerByClientId($clientID);
         if ($p) {
             Message::sendToAll($p->getMap()->getPlayers(), [LEFT => ["id" => $this->players[$clientID]->getPlayer()->getID()]], $this->server, 0);
@@ -107,7 +137,8 @@ class World {
         }
     }
 
-    private function filterMessage($array, $message, $clientID) {
+    private function filterMessage($array, $message, $clientID)
+    {
         if ($array[TALK]['p'] == $this->getPlayerByClientId($clientID)->getPlayer()->getId()) {
             Message::sendToAll($this->getPlayerByClientId($clientID)->getMap()->getPlayers(), $message, $this->server, 1);
         } else {
@@ -115,13 +146,15 @@ class World {
         }
     }
 
-    public function onLoaded() {
+    public function onLoaded()
+    {
         $this->log(count($this->maps) . " Maps has been built");
         $this->log($this->npcs . " Npcs loaded");
         $this->log(count($this->items) . " Items loaded");
     }
 
-    public function onMessage($message, $clientID) {
+    public function onMessage($message, $clientID)
+    {
         $array = JsonGenerator::getArray($message);
         if (!is_array($array)) {
             $this->log("received unparseable: ($message)");
@@ -173,7 +206,8 @@ class World {
         }
     }
 
-    public function update() {
+    public function update()
+    {
         if (count($this->players) > 0) {
             foreach ($this->players as $player) {
                 $player->update();
